@@ -1,0 +1,114 @@
+{
+  "version": 1.0,
+  "author": "Fábio Yuuki Saruwataru",
+  "editor": "Wokwi for VScode",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht",
+      "top": 100,
+      "left": 200,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr",
+      "top": 200,
+      "left": 200,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-pir-motion-sensor",
+      "id": "pir",
+      "top": -100,
+      "left": 200,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot",
+      "top": -200,
+      "left": 200,
+      "attrs": {}
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled",
+      "top": 150,
+      "left": -250,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led",
+      "top": 0,
+      "left": -200,
+      "attrs": { "color": "blue" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 40,
+      "left": -200,
+      "attrs": { "value": "330" }
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relay",
+      "top": -100,
+      "left": -250,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo",
+      "top": -250,
+      "left": -250,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    ["esp:TX", "$serialMonitor:RX", "", []],
+    ["esp:RX", "$serialMonitor:TX", "", []],
+
+    ["esp:15", "dht:SDA", "green", ["v0"]],
+    ["esp:3V3", "dht:VCC", "red", ["v0"]],
+    ["esp:GND.1", "dht:GND", "black", ["v0"]],
+
+    ["esp:34", "ldr:AO", "green", ["v0"]],
+    ["esp:3V3", "ldr:VCC", "red", ["v0"]],
+    ["esp:GND.1", "ldr:GND", "black", ["v0"]],
+
+    ["esp:13", "pir:OUT", "green", ["v0"]],
+    ["esp:3V3", "pir:VCC", "red", ["v0"]],
+    ["esp:GND.1", "pir:GND", "black", ["v0"]],
+
+    ["esp:35", "pot:SIG", "green", ["v0"]],
+    ["esp:3V3", "pot:VCC", "red", ["v0"]],
+    ["esp:GND.1", "pot:GND", "black", ["v0"]],
+
+    ["esp:21", "oled:SDA", "green", ["v0"]],
+    ["esp:22", "oled:SCL", "green", ["v0"]],
+    ["esp:3V3", "oled:VCC", "red", ["v0"]],
+    ["esp:GND.1", "oled:GND", "black", ["v0"]],
+
+    ["esp:2", "led:A", "green", ["v0"]],
+    ["led:C", "r1:2", "green", ["v0"]],
+    ["r1:1", "esp:GND.1", "black", ["v0"]],
+
+    ["esp:4", "relay:IN", "green", ["v0"]],
+    ["esp:5V", "relay:VCC", "red", ["v0"]],
+    ["esp:GND.2", "relay:GND", "black", ["v0"]],
+
+    ["esp:18", "servo:PWM", "green", ["v0"]],
+    ["esp:5V", "servo:V+", "red", ["v0"]],
+    ["esp:GND.2", "servo:GND", "black", ["v0"]]
+  ]
+}
