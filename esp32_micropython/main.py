@@ -4,12 +4,17 @@ import time
 import ujson
 import ssd1306
 from umqttsimple import MQTTClient
+import dotenv
+
+# Load do .env
+env = dotenv.load()
 
 # --- Configurações MQTT ---
-MQTT_CLIENT_ID = "esp32_simulador_m2"
-MQTT_BROKER    = "broker.hivemq.com"
-MQTT_USER      = ""
-MQTT_PASSWORD  = ""
+MQTT_CLIENT_ID = env.get("MQTT_CLIENT_ID", "esp32_simulador_m2")
+MQTT_BROKER    = env.get("MQTT_BROKER", "broker.hivemq.com")
+MQTT_USER      = env.get("MQTT_USER", "admin")
+MQTT_PASSWORD  = env.get("MQTT_PASSWORD", "password")
+MQTT_PORT      = 8883
 
 TOPIC_PUB_SENSORES  = b"projeto_m2/coragi/sensores"
 TOPIC_SUB_ATUADORES = b"projeto_m2/coragi/atuadores/#"
@@ -63,12 +68,23 @@ def sub_cb(topic, msg):
 
 # --- Conexão MQTT ---
 def conectar_mqtt():
-    print("Conectando ao broker MQTT...")
-    client = MQTTClient(MQTT_CLIENT_ID, MQTT_BROKER, user=MQTT_USER, password=MQTT_PASSWORD)
+    print(f"Conectando ao cluster HiveMQ Cloud em {MQTT_BROKER}...")
+    
+    client = MQTTClient(
+        client_id=MQTT_CLIENT_ID, 
+        server=MQTT_BROKER, 
+        port=MQTT_PORT, 
+        user=MQTT_USER, 
+        password=MQTT_PASSWORD, 
+        keepalive=60,
+        ssl=True, 
+        ssl_params={'server_hostname': MQTT_BROKER}
+    )
+    
     client.set_callback(sub_cb)
     client.connect()
     client.subscribe(TOPIC_SUB_ATUADORES)
-    print(f"Conectado a {MQTT_BROKER}, inscrito em {TOPIC_SUB_ATUADORES.decode('utf-8')}")
+    print("Conexão segura estabelecida com sucesso!")
     return client
 
 # Inicializa Cliente MQTT
