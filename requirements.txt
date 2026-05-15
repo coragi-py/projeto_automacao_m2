@@ -1,0 +1,2 @@
+paho-mqtt==1.6.1   # Para testar envio/recebimento MQTT direto pelo terminal, se precisar
+esptool==4.6.2     # Para gravar o firmware real no ESP32 físico depois (se houver)

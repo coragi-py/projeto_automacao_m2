@@ -1,0 +1,13 @@
+# Ambientes Virtuais
+venv/
+env/
+
+# Cache e compilados Python
+__pycache__/
+*.pyc
+
+# Configurações do VS Code
+.vscode/
+
+# Ignorar o data folder do Node-RED
+node_red_data/
